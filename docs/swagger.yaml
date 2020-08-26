@@ -1,0 +1,1954 @@
+basePath: /
+definitions:
+  app.Response:
+    properties:
+      code:
+        type: integer
+      data:
+        type: object
+      msg:
+        type: string
+    type: object
+  request.AdForm:
+    properties:
+      category_id:
+        type: integer
+      product_id:
+        type: integer
+    type: object
+  request.AddRoleForUserForm:
+    properties:
+      role_name:
+        description: 角色名
+        type: string
+      user_name:
+        description: 用户名
+        type: string
+    type: object
+  request.AddUserForm:
+    properties:
+      password:
+        description: 密码
+        type: string
+      user_name:
+        description: 用户名
+        type: string
+      verify_code:
+        type: string
+    type: object
+  request.AddressForm:
+    properties:
+      city:
+        type: string
+      detail_address:
+        type: string
+      district:
+        type: string
+      province:
+        type: string
+      signer_mobile:
+        type: string
+      signer_name:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  request.BrandForm:
+    properties:
+      category_id:
+        type: integer
+      desc:
+        type: string
+      image_url:
+        type: string
+      name:
+        type: string
+    type: object
+  request.CategoryForm:
+    properties:
+      category_type:
+        type: integer
+      code:
+        type: string
+      desc:
+        type: string
+      is_tab:
+        type: integer
+      name:
+        type: string
+      parent_category_id:
+        type: integer
+    type: object
+  request.CollectForm:
+    properties:
+      product_id:
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  request.HotSearchForm:
+    properties:
+      index:
+        type: integer
+      keyword:
+        type: string
+    type: object
+  request.IndexBannerForm:
+    properties:
+      image_url:
+        type: string
+      index:
+        type: integer
+      product_id:
+        type: integer
+    type: object
+  request.LeavingMessageForm:
+    properties:
+      content:
+        type: string
+      message_type:
+        type: integer
+      title:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  request.LoginUserForm:
+    properties:
+      password:
+        description: 密码
+        type: string
+      user_name:
+        description: 用户名
+        type: string
+    type: object
+  request.OrderInfoForm:
+    properties:
+      client_type:
+        description: '1: Web, 2: Web App'
+        type: integer
+      order_products:
+        description: 订单中的商品
+        items:
+          $ref: '#/definitions/request.OrderProduct'
+        type: array
+      post_script:
+        description: 订单留言
+        type: string
+      return_url:
+        description: 支付成功后跳转页面
+        type: string
+      user_id:
+        type: integer
+    type: object
+  request.OrderProduct:
+    properties:
+      num:
+        type: integer
+      product_id:
+        type: integer
+    type: object
+  request.Policy:
+    properties:
+      method:
+        description: 请求方法
+        type: string
+      path:
+        description: API路径
+        type: string
+    type: object
+  request.ProductForm:
+    properties:
+      banner_urls:
+        items:
+          type: string
+        type: array
+      brief:
+        type: string
+      category_id:
+        type: integer
+      desc:
+        type: string
+      front_image_url:
+        type: string
+      is_freight:
+        type: integer
+      is_hot:
+        type: integer
+      is_new:
+        type: integer
+      left_num:
+        type: integer
+      market_price:
+        type: number
+      name:
+        type: string
+      shop_price:
+        type: number
+    type: object
+  request.ShoppingCartForm:
+    properties:
+      num:
+        type: integer
+      product_id:
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  request.UpdateRoleForm:
+    properties:
+      policys:
+        description: casbin 中 policy 规则
+        items:
+          $ref: '#/definitions/request.Policy'
+        type: array
+      role_name:
+        description: 角色名
+        type: string
+    type: object
+  request.UpdateUserForm:
+    properties:
+      address:
+        description: 地址
+        type: string
+      gender:
+        description: 性别
+        type: string
+      mobile:
+        description: 手机号
+        type: string
+      password:
+        description: 密码
+        type: string
+      real_name:
+        description: 联系人
+        type: string
+    type: object
+  request.VerifyCodeForm:
+    properties:
+      email:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: This is a sample Server pets
+  license: {}
+  title: Swagger Example API
+  version: 0.0.1
+paths:
+  /api/v1/addresses:
+    get:
+      consumes:
+      - application/json
+      description: 查询所有用户收货地址
+      operationId: GetAllAddress
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 查询所有用户收货地址
+      tags:
+      - 用户收货地址接口
+    post:
+      consumes:
+      - application/json
+      description: 添加用户收货地址
+      operationId: AddAddress
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/request.AddressForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 添加用户收货地址
+      tags:
+      - 用户收货地址接口
+  /api/v1/addresses/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 删除用户收货地址
+      operationId: DeleteAddress
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除用户收货地址
+      tags:
+      - 用户收货地址接口
+    get:
+      consumes:
+      - application/json
+      description: 用户收货地址详情
+      operationId: GetAddress
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 用户收货地址详情
+      tags:
+      - 用户收货地址接口
+    put:
+      consumes:
+      - application/json
+      description: 更新用户收货地址
+      operationId: UpdateAddress
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/request.AddressForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新用户收货地址
+      tags:
+      - 用户收货地址接口
+  /api/v1/ads:
+    get:
+      consumes:
+      - application/json
+      description: 查询所有分类广告商品
+      operationId: GetAllAd
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 查询所有分类广告商品
+      tags:
+      - 分类广告商品接口
+    post:
+      consumes:
+      - application/json
+      description: 添加分类广告商品
+      operationId: AddAd
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/request.AdForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 添加分类广告商品
+      tags:
+      - 分类广告商品接口
+  /api/v1/ads/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 删除分类广告商品
+      operationId: DeleteAd
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除分类广告商品
+      tags:
+      - 分类广告商品接口
+    get:
+      consumes:
+      - application/json
+      description: 分类广告商品详情
+      operationId: GetAd
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 分类广告商品详情
+      tags:
+      - 分类广告商品接口
+    put:
+      consumes:
+      - application/json
+      description: 更新分类广告商品
+      operationId: UpdateAd
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/request.AdForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新分类广告商品
+      tags:
+      - 分类广告商品接口
+  /api/v1/apis:
+    get:
+      consumes:
+      - application/json
+      description: 查询所有API
+      operationId: GetAllApi
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 查询所有API
+      tags:
+      - API接口
+  /api/v1/apis/{id}:
+    get:
+      consumes:
+      - application/json
+      description: API详情
+      operationId: GetApi
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: API详情
+      tags:
+      - API接口
+  /api/v1/brands:
+    get:
+      consumes:
+      - application/json
+      description: 查询所有品牌
+      operationId: GetAllBrand
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 查询所有品牌
+      tags:
+      - 品牌接口
+    post:
+      consumes:
+      - application/json
+      description: 添加品牌
+      operationId: AddBrand
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/request.BrandForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 添加品牌
+      tags:
+      - 品牌接口
+  /api/v1/brands/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 删除品牌
+      operationId: DeleteBrand
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除品牌
+      tags:
+      - 品牌接口
+    get:
+      consumes:
+      - application/json
+      description: 品牌详情
+      operationId: GetBrand
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 品牌详情
+      tags:
+      - 品牌接口
+    put:
+      consumes:
+      - application/json
+      description: 更新品牌
+      operationId: UpdateBrand
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/request.BrandForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新品牌
+      tags:
+      - 品牌接口
+  /api/v1/captcha:
+    get:
+      consumes:
+      - application/json
+      description: 生成验证码
+      operationId: Captcha
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: 生成验证码
+      tags:
+      - 验证码接口
+  /api/v1/categories:
+    get:
+      consumes:
+      - application/json
+      description: 查询所有分类
+      operationId: GetAllCategory
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 查询所有分类
+      tags:
+      - 分类接口
+    post:
+      consumes:
+      - application/json
+      description: 添加分类
+      operationId: AddCategory
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/request.CategoryForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 添加分类
+      tags:
+      - 分类接口
+  /api/v1/categories/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 删除分类
+      operationId: DeleteCategory
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除分类
+      tags:
+      - 分类接口
+    get:
+      consumes:
+      - application/json
+      description: 分类详情
+      operationId: GetCategory
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 分类详情
+      tags:
+      - 分类接口
+    put:
+      consumes:
+      - application/json
+      description: 更新分类
+      operationId: UpdateCategory
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/request.CategoryForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新分类
+      tags:
+      - 分类接口
+  /api/v1/collects:
+    get:
+      consumes:
+      - application/json
+      description: 查询所有收藏
+      operationId: GetAllCollect
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 查询所有收藏
+      tags:
+      - 用户收藏接口
+    post:
+      consumes:
+      - application/json
+      description: 添加收藏
+      operationId: AddCollect
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/request.CollectForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 添加收藏
+      tags:
+      - 用户收藏接口
+  /api/v1/collects/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 删除收藏
+      operationId: DeleteCollect
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除收藏
+      tags:
+      - 用户收藏接口
+    get:
+      consumes:
+      - application/json
+      description: 收藏详情
+      operationId: GetCollect
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 收藏详情
+      tags:
+      - 用户收藏接口
+    put:
+      consumes:
+      - application/json
+      description: 更新收藏
+      operationId: UpdateCollect
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/request.CollectForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新收藏
+      tags:
+      - 用户收藏接口
+  /api/v1/hot_searchs:
+    get:
+      consumes:
+      - application/json
+      description: 查询所有热搜词
+      operationId: GetAllHotSearch
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 查询所有热搜词
+      tags:
+      - 热搜词接口
+    post:
+      consumes:
+      - application/json
+      description: 添加热搜词
+      operationId: AddHotSearch
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/request.HotSearchForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 添加热搜词
+      tags:
+      - 热搜词接口
+  /api/v1/hot_searchs/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 删除热搜词
+      operationId: DeleteHotSearch
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除热搜词
+      tags:
+      - 热搜词接口
+    get:
+      consumes:
+      - application/json
+      description: 热搜词详情
+      operationId: GetHotSearch
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 热搜词详情
+      tags:
+      - 热搜词接口
+    put:
+      consumes:
+      - application/json
+      description: 更新热搜词
+      operationId: UpdateHotSearch
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/request.HotSearchForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新热搜词
+      tags:
+      - 热搜词接口
+  /api/v1/index_banners:
+    get:
+      consumes:
+      - application/json
+      description: 查询所有首页轮播图
+      operationId: GetAllIndexBanner
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 查询所有首页轮播图
+      tags:
+      - 首页轮播图接口
+    post:
+      consumes:
+      - application/json
+      description: 添加首页轮播图
+      operationId: AddIndexBanner
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/request.IndexBannerForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 添加首页轮播图
+      tags:
+      - 首页轮播图接口
+  /api/v1/index_banners/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 删除首页轮播图
+      operationId: DeleteIndexBanner
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除首页轮播图
+      tags:
+      - 首页轮播图接口
+    get:
+      consumes:
+      - application/json
+      description: 首页轮播图详情
+      operationId: GetIndexBanner
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 首页轮播图详情
+      tags:
+      - 首页轮播图接口
+    put:
+      consumes:
+      - application/json
+      description: 更新首页轮播图
+      operationId: UpdateIndexBanner
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/request.IndexBannerForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新首页轮播图
+      tags:
+      - 首页轮播图接口
+  /api/v1/leaving_messages:
+    get:
+      consumes:
+      - application/json
+      description: 查询所有用户留言
+      operationId: GetAllLeavingMessage
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 查询所有用户留言
+      tags:
+      - 用户留言接口
+    post:
+      consumes:
+      - application/json
+      description: 添加用户留言
+      operationId: AddLeavingMessage
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/request.LeavingMessageForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 添加用户留言
+      tags:
+      - 用户留言接口
+  /api/v1/leaving_messages/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 删除用户留言
+      operationId: DeleteLeavingMessage
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除用户留言
+      tags:
+      - 用户留言接口
+    get:
+      consumes:
+      - application/json
+      description: 用户留言详情
+      operationId: GetLeavingMessage
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 用户留言详情
+      tags:
+      - 用户留言接口
+    put:
+      consumes:
+      - application/json
+      description: 更新用户留言
+      operationId: UpdateLeavingMessage
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/request.LeavingMessageForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新用户留言
+      tags:
+      - 用户留言接口
+  /api/v1/login:
+    post:
+      consumes:
+      - application/json
+      description: 用户登录
+      operationId: UserLogin
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/request.LoginUserForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: 用户登录
+      tags:
+      - 用户接口
+  /api/v1/orders:
+    get:
+      consumes:
+      - application/json
+      description: 查询所有订单信息
+      operationId: GetAllOrderInfo
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 查询所有订单信息
+      tags:
+      - 订单信息接口
+    post:
+      consumes:
+      - application/json
+      description: 添加订单信息
+      operationId: AddOrderInfo
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/request.OrderInfoForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 添加订单信息
+      tags:
+      - 订单信息接口
+  /api/v1/orders/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 删除订单信息
+      operationId: DeleteOrderInfo
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除订单信息
+      tags:
+      - 订单信息接口
+    get:
+      consumes:
+      - application/json
+      description: 订单信息详情
+      operationId: GetOrderInfo
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 订单信息详情
+      tags:
+      - 订单信息接口
+    put:
+      consumes:
+      - application/json
+      description: 更新订单信息
+      operationId: UpdateOrderInfo
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/request.OrderInfoForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新订单信息
+      tags:
+      - 订单信息接口
+  /api/v1/pay:
+    post:
+      consumes:
+      - application/json
+      description: 支付成功回调接口
+      operationId: AddOrderInfo
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: 支付成功回调接口
+      tags:
+      - 订单信息接口
+  /api/v1/products:
+    get:
+      consumes:
+      - application/json
+      description: 查询所有商品
+      operationId: GetAllProduct
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: 查询所有商品
+      tags:
+      - 商品接口
+    post:
+      consumes:
+      - application/json
+      description: 添加商品
+      operationId: AddProduct
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/request.ProductForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 添加商品
+      tags:
+      - 商品接口
+  /api/v1/products/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 删除商品
+      operationId: DeleteProduct
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除商品
+      tags:
+      - 商品接口
+    get:
+      consumes:
+      - application/json
+      description: 商品详情
+      operationId: GetProduct
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: 商品详情
+      tags:
+      - 商品接口
+    put:
+      consumes:
+      - application/json
+      description: 更新商品
+      operationId: UpdateProduct
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/request.ProductForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新商品
+      tags:
+      - 商品接口
+  /api/v1/roles:
+    get:
+      consumes:
+      - application/json
+      description: 查询所有角色
+      operationId: GetAllRole
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 查询所有角色
+      tags:
+      - 角色接口
+    post:
+      consumes:
+      - application/json
+      description: 添加/更新角色
+      operationId: AddRole
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdateRoleForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 添加/更新角色
+      tags:
+      - 角色接口
+  /api/v1/roles/{role_name}:
+    delete:
+      consumes:
+      - application/json
+      description: 删除角色
+      operationId: DeleteRole
+      parameters:
+      - description: 角色名
+        in: path
+        name: role_name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除角色
+      tags:
+      - 角色接口
+  /api/v1/shopping_carts:
+    get:
+      consumes:
+      - application/json
+      description: 查询所有购物车
+      operationId: GetAllShoppingCart
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 查询所有购物车
+      tags:
+      - 购物车接口
+    post:
+      consumes:
+      - application/json
+      description: 添加购物车
+      operationId: AddShoppingCart
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/request.ShoppingCartForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 添加购物车
+      tags:
+      - 购物车接口
+  /api/v1/shopping_carts/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 删除购物车
+      operationId: DeleteShoppingCart
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除购物车
+      tags:
+      - 购物车接口
+    get:
+      consumes:
+      - application/json
+      description: 购物车详情
+      operationId: GetShoppingCart
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 购物车详情
+      tags:
+      - 购物车接口
+    put:
+      consumes:
+      - application/json
+      description: 更新购物车
+      operationId: UpdateShoppingCart
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/request.ShoppingCartForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新购物车
+      tags:
+      - 购物车接口
+  /api/v1/upload:
+    post:
+      consumes:
+      - multipart/form-data
+      description: 上传图片
+      operationId: UploadImage
+      parameters:
+      - description: 图片
+        in: formData
+        name: image
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: 上传图片
+      tags:
+      - 上传接口
+  /api/v1/user/role:
+    post:
+      consumes:
+      - application/json
+      description: 为用户添加角色
+      operationId: AddRole
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/request.AddRoleForUserForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 为用户添加角色
+      tags:
+      - 角色接口
+  /api/v1/users:
+    get:
+      consumes:
+      - application/json
+      description: 查询所有用户
+      operationId: GetAllUser
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 查询所有用户
+      tags:
+      - 用户接口
+    post:
+      consumes:
+      - application/json
+      description: 添加用户
+      operationId: AddUser
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/request.AddUserForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: 添加用户
+      tags:
+      - 用户接口
+  /api/v1/users/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 删除用户
+      operationId: DeleteUser
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除用户
+      tags:
+      - 用户接口
+    get:
+      consumes:
+      - application/json
+      description: 用户详情
+      operationId: GetUser
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 用户详情
+      tags:
+      - 用户接口
+    put:
+      consumes:
+      - application/json
+      description: 更新用户
+      operationId: UpdateUser
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdateUserForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新用户
+      tags:
+      - 用户接口
+  /api/v1/verify_code:
+    post:
+      consumes:
+      - application/json
+      description: 生成邮箱验证码
+      operationId: AddVerifyCode
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/request.VerifyCodeForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 生成邮箱验证码
+      tags:
+      - 验证码接口
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

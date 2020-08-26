@@ -1,0 +1,5 @@
+2020-08-23T15:29:02.434+0800	ERROR	app/validator.go:34	ParentCategoryID.Min.ParentCategoryID Minimum is 1
+2020-08-23T15:29:02.434+0800	ERROR	app/validator.go:34	Desc.MinSize.Desc Minimum size is 5
+2020-08-23T15:30:09.723+0800	ERROR	app/validator.go:34	ParentCategoryID.Min.ParentCategoryID Minimum is 1
+2020-08-23T15:31:43.597+0800	ERROR	app/validator.go:34	LeftNum.Min.LeftNum Minimum is 1
+2020-08-23T15:31:43.597+0800	ERROR	app/validator.go:34	Desc.MinSize.Desc Minimum size is 20
